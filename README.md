@@ -1,4 +1,4 @@
-# Powertrain-Case-Selection
+# Powertrain Case Selection
 
 Tools : Python, Plotly
 
