@@ -2,6 +2,8 @@
 
 A Python script that analyzes powertrain configurations for different vehicle conditions (highway, inclined, city) to select the adequate motor.
 
+Check it out here : https://itsvinm-powertrain-case-selection-powertrain-sim-1k95tr.streamlit.app/
+
 <img src=https://github.com/user-attachments/assets/3d40ab48-87dc-496d-ad83-555315a6963e alt="Image 2" width="1000" height="400">
 
 ## Installation
