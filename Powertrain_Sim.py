@@ -38,9 +38,28 @@ with tab1:
         scenarios_df,
         num_rows="dynamic",  # Allows adding or removing rows
         column_config={
-            "condition": st.column_config.TextColumn(
-                "Condition", help="e.g., high_speed, low_speed, idle"
-            )
+        "max_speed_vehicle": st.column_config.NumberColumn(
+            "Vehicle Speed (m/s)",
+            help="Maximum vehicle speed for the scenario.",
+            format="%.2f",
+        ),
+        "torque": st.column_config.NumberColumn(
+            "Wheel Torque (Nm)",
+            help="Torque at the wheels for the scenario.",
+        ),
+        "power": st.column_config.NumberColumn(
+            "Required Power (kW)",
+            help="Power required for the scenario.",
+            format="%.3f",
+        ),
+        "max_speed_gearbox": st.column_config.NumberColumn(
+            "Gearbox Speed (RPM)",
+            help="The maximum speed of the gearbox.",
+        ),
+        "condition": st.column_config.TextColumn(
+            "Driving Condition",
+            help="e.g., high_speed, low_speed, idle.",
+        ),
         }
     )
 
@@ -63,8 +82,32 @@ with tab1:
 
     # Use st.data_editor for an editable engines table
     st.subheader("Engine Characteristics")
-    edited_engines_df = st.data_editor(engines_df, num_rows="dynamic")
-
+    edited_engines_df = st.data_editor(
+    engines_df,
+    num_rows="dynamic",
+    column_config={
+        "Engine": st.column_config.TextColumn(
+            "Engine Name",
+            help="Name of the engine model.",
+        ),
+        "low_speed": st.column_config.NumberColumn(
+            "Min Speed (RPM)",
+            help="Minimum operating speed of the engine.",
+        ),
+        "high_speed": st.column_config.NumberColumn(
+            "Max Speed (RPM)",
+            help="Maximum operating speed of the engine.",
+        ),
+        "low_torque": st.column_config.NumberColumn(
+            "Min Torque (Nm)",
+            help="Torque at the low speed.",
+        ),
+        "high_torque": st.column_config.NumberColumn(
+            "Max Torque (Nm)",
+            help="Torque at the high speed.",
+        ),
+    }
+)
     # Convert the edited DataFrame back to the required dictionary format
     user_engines = edited_engines_df.set_index('Engine').T.to_dict()
 
