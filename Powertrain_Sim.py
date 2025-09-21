@@ -1,7 +1,5 @@
 import streamlit as st
 import numpy as np
-import plotly.graph_objs as go
-from plotly.subplots import make_subplots
 import pandas as pd
 import math
 from scipy.interpolate import make_interp_spline
