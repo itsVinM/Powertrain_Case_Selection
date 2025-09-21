@@ -152,28 +152,10 @@ with tab2:
     st.header("Gear Ratios Table")
 
     headers, rows = calculator.create_table()
-
-    # Updated color palette for better visibility
-    engine_colors = {
-        'Engine1': "#021E39",  
-        'Engine3': "#034703",  
-        'Engine7': "#420505", 
-    }
-
+    
     # Convert the list of tuples to a Pandas DataFrame
     df = pd.DataFrame(rows, columns=headers)
-
-    # Apply a custom background color to the 'Engine' column based on the dictionary
-    def highlight_rows(row):
-        color = engine_colors.get(row['Engine'], 'white')
-        return [f'background-color: {color}' for _ in row]
-
-    # Check if the 'Engine' column exists before applying the style
-    if 'Engine' in df.columns:
-        styled_df = df.style.apply(highlight_rows, axis=1)
-    else:
-        styled_df = df.style
-
+   
     # Display the styled DataFrame
-    st.dataframe(styled_df, use_container_width=True)
+    st.dataframe(df, use_container_width=True)
 
