@@ -1,8 +1,6 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import math
-from scipy.interpolate import make_interp_spline
 from motor_graphs_powertrain import *
 
 st.set_page_config(
