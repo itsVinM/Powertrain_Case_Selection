@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-from motor_graphs_powertrain import *
+from motor_graphs_powertrain import EngineGearRatioCalculator, TorqueSpeedGraph, PowerSpeedGraph
 
 
 st.set_page_config(
