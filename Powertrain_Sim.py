@@ -175,7 +175,7 @@ with tab3:
         e_on = st.number_input("On-state Energy Loss (E_on) [mJ]", min_value=0.1, max_value=10e3, value=1.5, format="%.2f") * 1e-3
         e_off = st.number_input("Off-state Energy Loss (E_off) [mJ]", min_value=0.1, max_value=10e3, value=1.0, format="%.2f") * 1e-3
         f_sw_khz = st.selectbox("Switching Frequency (f_sw) [kHz]", [10, 20, 50, 100], index=1)
-        mod_index=st.number_input("Modulation index", mod_index=0.1, max_value=2.0, value=0.85, format="%.2f")
+        mod_index=st.number_input("Modulation index", min_value=0.1, max_value=2.0, value=0.85, format="%.2f")
         f_sw = f_sw_khz * 1000
 
     with col2:
