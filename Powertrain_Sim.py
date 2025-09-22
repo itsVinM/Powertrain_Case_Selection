@@ -168,7 +168,7 @@ with tab3:
     with col1:
         st.subheader("Inverter Parameters")
         # Use a slider for DC Voltage to show a typical range
-        v_dc = st.slider("DC Link Voltage (V)", min_value=200.0, max_value=800.0, value=400.0, step=10.0)
+        vdc = st.slider("DC Link Voltage (V)", min_value=200.0, max_value=800.0, value=400.0, step=10.0)
 
         # Numerical inputs for semiconductor properties
         r_on = st.number_input("On-state Resistance (R_on) [ohms]", min_value=0.001, max_value=0.1, value=0.01, format="%.4f")
@@ -194,20 +194,15 @@ with tab3:
             required_power_kw = selected_scenario['power']
             required_torque_nm = selected_scenario['torque']
             
-            # Use the required power to estimate the AC output current (a simplified step for the app)
-            # Assuming a simplified relationship: P = sqrt(3) * V_dc * I_out_rms
             # This is a simplification; a more complex model would consider modulation index etc.
             ac_power_watt = required_power_kw * 1000
             
-            if v_dc > 0:
-                # Assuming AC voltage is proportional to DC voltage (V_ac_rms = 0.707 * V_dc)
-                # I_out_rms = P_ac / (sqrt(3) * V_ac_rms)
-                # Simplifying further for app purposes:
-                i_out_rms = ac_power_watt / (v_dc * 0.9)  # 0.9 is an arbitrary power conversion factor
+            if vdc > 0:
+                i_out_rms = ac_power_watt / (vdc * 0.9)  # 0.9 is an arbitrary power conversion factor
                 
                 # Run the inverter model with the selected parameters
                 inverter_metrics = inverter_model(
-                    V_dc=v_dc,
+                    Vdc=vdc,
                     I_out_rms=i_out_rms,
                     f_sw=f_sw,
                     R_on=r_on,
