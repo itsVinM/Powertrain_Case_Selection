@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import math
-import plotly.graph_objs as go
+import plotly.grph_objs as go
 from plotly.subplots import make_subplots
 from motor_graphs_powertrain import EngineGearRatioCalculator, TorqueSpeedGraph, PowerSpeedGraph
 
@@ -20,7 +20,7 @@ st.markdown("This application displays the torque-speed and power-speed curves f
 
 # ---
 
-tab1, tab2 =st.tabs(["User-defined inputs",'Plots'])
+tab1, tab2 =st.tabs(["Inputs",'Vehicle performance Graphs'])
 ## User-Defined Inputs
 
 with tab1:
@@ -116,7 +116,7 @@ with tab1:
 
 with tab2:
     ## Plotting Graphs
-    st.header("Engine Performance Graphs")
+    
 
     # Create instances of necessary classes using the user-defined data
     calculator = EngineGearRatioCalculator(user_engines, user_scenarios)
