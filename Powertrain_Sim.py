@@ -172,7 +172,7 @@ with tab3:
 
         # Numerical inputs for semiconductor properties
         r_on = st.number_input("On-state Resistance (R_on) [ohms]", min_value=0.001, max_value=0.9, value=0.01, format="%.4f")
-        v_f = st.number_input("Diode Forward Voltage (V_f) [V]", min_value=0.5, max_value=20, value=1.0, format="%.2f")
+        v_f = st.number_input("Diode Forward Voltage (V_f) [V]", min_value=0.5, max_value=2, value=1.0, format="%.2f")
         e_on = st.number_input("On-state Energy Loss (E_on) [mJ]", min_value=0.1, max_value=10e3, value=1.5, format="%.2f") * 1e-3
         e_off = st.number_input("Off-state Energy Loss (E_off) [mJ]", min_value=0.1, max_value=10e3, value=1.0, format="%.2f") * 1e-3
         
