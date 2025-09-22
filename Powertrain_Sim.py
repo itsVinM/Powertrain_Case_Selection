@@ -165,65 +165,71 @@ with tab3:
 
     col1, col2 = st.columns(2)
 
+    col1, col2 = st.columns(2)
+
     with col1:
         st.subheader("Inverter Parameters")
-        # Use a slider for DC Voltage to show a typical range
         vdc = st.slider("DC Link Voltage (V)", min_value=200.0, max_value=800.0, value=400.0, step=10.0)
-
-        # Numerical inputs for semiconductor properties
         r_on = st.number_input("On-state Resistance (R_on) [ohms]", min_value=0.001, max_value=0.9, value=0.01, format="%.4f")
         v_f = st.number_input("Diode Forward Voltage (V_f) [V]", min_value=0.5, max_value=2.0, value=1.0, format="%.2f")
         e_on = st.number_input("On-state Energy Loss (E_on) [mJ]", min_value=0.1, max_value=10e3, value=1.5, format="%.2f") * 1e-3
         e_off = st.number_input("Off-state Energy Loss (E_off) [mJ]", min_value=0.1, max_value=10e3, value=1.0, format="%.2f") * 1e-3
-        
-        # A dropdown for switching frequency, showing common options
         f_sw_khz = st.selectbox("Switching Frequency (f_sw) [kHz]", [10, 20, 50, 100], index=1)
         f_sw = f_sw_khz * 1000
 
     with col2:
         st.subheader("Analysis Results")
         
-        # We'll tie the inverter analysis to a specific vehicle scenario for context.
-        st.markdown("Choose a scenario from the 'Inputs' tab to analyze the inverter's performance at that operating point.")
         scenario_names = [scenario['condition'] for scenario in user_scenarios]
         selected_scenario_name = st.selectbox("Select Scenario for Analysis", scenario_names)
 
-        # Get the required power and torque for the selected scenario
         selected_scenario = next((item for item in user_scenarios if item['condition'] == selected_scenario_name), None)
         if selected_scenario:
             required_power_kw = selected_scenario['power']
-            required_torque_nm = selected_scenario['torque']
             
-            # This is a simplification; a more complex model would consider modulation index etc.
-            ac_power_watt = required_power_kw * 1000
+            # Revised logic:
+            # 1. Assume a motor efficiency to get the required AC electrical power.
+            # 2. Assume an output AC voltage (proportional to DC link).
+            # 3. Calculate the required RMS current.
             
-            if vdc > 0:
-                i_out_rms = ac_power_watt / (vdc * 0.9)  # 0.9 is an arbitrary power conversion factor
+            motor_efficiency = 0.90 # 90% efficiency
+            required_ac_power_watt = required_power_kw * 1000 / motor_efficiency
+            
+            # Simple approximation of AC output voltage from DC link
+            # V_out_rms = V_dc * Modulation_Index / sqrt(2)
+            # Assuming a good modulation index of 0.85
+            v_out_rms = vdc * 0.85 / math.sqrt(2)
+            
+            # Assuming a power factor of 0.9
+            pf = 0.9
+            
+            if v_out_rms > 0 and pf > 0:
+                i_out_rms = required_ac_power_watt / (math.sqrt(3) * v_out_rms * pf)
                 
-                # Run the inverter model with the selected parameters
+                # Run the inverter model with the corrected parameters
                 inverter_metrics = inverter_model(
-                    Vdc=vdc,
+                    V_dc=vdc,
                     I_out_rms=i_out_rms,
                     f_sw=f_sw,
                     R_on=r_on,
                     V_f=v_f,
                     E_on=e_on,
-                    E_off=e_off
+                    E_off=e_off,
+                    V_out_rms=v_out_rms
                 )
 
                 # Display the key performance metrics
-                st.metric(label=f"AC Output Power for '{selected_scenario_name}'", value=f"{inverter_metrics['P_out'] / 1000:.2f} kW")
-                st.metric(label="Calculated Inverter Losses", value=f"{inverter_metrics['P_losses']/ 1000:.2f} kW")
+                st.metric(label=f"AC Output Power for '{selected_scenario_name}'", value=f"{inverter_metrics['P_out_ac'] / 1000:.2f} kW")
+                st.metric(label="Calculated Inverter Losses", value=f"{inverter_metrics['P_losses']:.2f} W")
                 st.metric(label="Overall Inverter Efficiency", value=f"{inverter_metrics['efficiency_percent']:.2f}%")
-                st.metric(label="DC Input Power", value=f"{inverter_metrics['P_in'] / 1000:.2f} kW")
+                st.metric(label="DC Input Power", value=f"{inverter_metrics['P_in_dc'] / 1000:.2f} kW")
             else:
-                st.error("DC Link Voltage must be greater than zero.")
+                st.error("Cannot calculate power, check voltage and power factor.")
         else:
             st.warning("Please select a valid scenario from the 'Inputs' tab.")
 
     st.markdown("---")
 
-    # Optional: Plotting a simple efficiency curve to demonstrate model capability
     st.subheader("Inverter Efficiency Curve")
     st.markdown("This graph shows the inverter's efficiency across a range of output currents.")
 
@@ -231,14 +237,16 @@ with tab3:
     efficiency_values = []
     
     for i_rms in current_range:
+        v_out_rms_plot = vdc * 0.85 / math.sqrt(2) # Assume constant voltage for simplicity
         results = inverter_model(
-            Vdc=vdc,
+            V_dc=vdc,
             I_out_rms=i_rms,
             f_sw=f_sw,
             R_on=r_on,
             V_f=v_f,
             E_on=e_on,
-            E_off=e_off
+            E_off=e_off,
+            V_out_rms=v_out_rms_plot
         )
         efficiency_values.append(results['efficiency_percent'])
 
@@ -254,4 +262,5 @@ with tab3:
                       yaxis_range=[70, 100])
     
     st.plotly_chart(fig, use_container_width=True)
+
 
