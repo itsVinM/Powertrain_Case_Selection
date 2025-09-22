@@ -213,7 +213,7 @@ with tab3:
 
                 # Display the key performance metrics
                 st.metric(label=f"AC Output Power for '{selected_scenario_name}'", value=f"{inverter_metrics['P_out'] / 1000:.2f} kW")
-                st.metric(label="Calculated Inverter Losses", value=f"{inverter_metrics['P_losses']:.2f} W")
+                st.metric(label="Calculated Inverter Losses", value=f"{inverter_metrics['P_losses']/ 1000:.2f} kW")
                 st.metric(label="Overall Inverter Efficiency", value=f"{inverter_metrics['efficiency_percent']:.2f}%")
                 st.metric(label="DC Input Power", value=f"{inverter_metrics['P_in'] / 1000:.2f} kW")
             else:
@@ -232,7 +232,7 @@ with tab3:
     
     for i_rms in current_range:
         results = inverter_model(
-            V_dc=v_dc,
+            Vdc=vdc,
             I_out_rms=i_rms,
             f_sw=f_sw,
             R_on=r_on,
