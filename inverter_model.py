@@ -5,8 +5,6 @@ import pandas as pd
 import math
 from scipy.interpolate import make_interp_spline
 
-dimport math
-
 def inverter_model(
     V_dc: float,           # DC link voltage (V)
     I_out_rms: float,      # RMS output phase current (A)
