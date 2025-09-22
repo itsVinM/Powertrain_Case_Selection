@@ -171,13 +171,13 @@ with tab3:
         vdc = st.slider("DC Link Voltage (V)", min_value=200.0, max_value=800.0, value=400.0, step=10.0)
 
         # Numerical inputs for semiconductor properties
-        r_on = st.number_input("On-state Resistance (R_on) [ohms]", min_value=0.001, max_value=0.1, value=0.01, format="%.4f")
-        v_f = st.number_input("Diode Forward Voltage (V_f) [V]", min_value=0.5, max_value=2.0, value=1.0, format="%.2f")
-        e_on = st.number_input("On-state Energy Loss (E_on) [mJ]", min_value=0.1, max_value=5.0, value=1.5, format="%.2f") * 1e-3
-        e_off = st.number_input("Off-state Energy Loss (E_off) [mJ]", min_value=0.1, max_value=5.0, value=1.0, format="%.2f") * 1e-3
+        r_on = st.number_input("On-state Resistance (R_on) [ohms]", min_value=0.001, max_value=0.9, value=0.01, format="%.4f")
+        v_f = st.number_input("Diode Forward Voltage (V_f) [V]", min_value=0.5, max_value=20, value=1.0, format="%.2f")
+        e_on = st.number_input("On-state Energy Loss (E_on) [mJ]", min_value=0.1, max_value=10e3, value=1.5, format="%.2f") * 1e-3
+        e_off = st.number_input("Off-state Energy Loss (E_off) [mJ]", min_value=0.1, max_value=10e3, value=1.0, format="%.2f") * 1e-3
         
         # A dropdown for switching frequency, showing common options
-        f_sw_khz = st.selectbox("Switching Frequency (f_sw) [kHz]", [10, 20, 50, 100], index=1)
+        f_sw_khz = st.slider("Switching Frequency (f_sw) [kHz]", min_value=0, max_value=100e3, step=100)
         f_sw = f_sw_khz * 1000
 
     with col2:
