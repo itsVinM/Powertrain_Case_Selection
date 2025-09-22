@@ -175,6 +175,7 @@ with tab3:
         e_on = st.number_input("On-state Energy Loss (E_on) [mJ]", min_value=0.1, max_value=10e3, value=1.5, format="%.2f") * 1e-3
         e_off = st.number_input("Off-state Energy Loss (E_off) [mJ]", min_value=0.1, max_value=10e3, value=1.0, format="%.2f") * 1e-3
         f_sw_khz = st.selectbox("Switching Frequency (f_sw) [kHz]", [10, 20, 50, 100], index=1)
+        mod_index=st.number_input("Modulation index", mod_index=0.1, max_value=2.0, value=0.85, format="%.2f")
         f_sw = f_sw_khz * 1000
 
     with col2:
@@ -186,11 +187,7 @@ with tab3:
         selected_scenario = next((item for item in user_scenarios if item['condition'] == selected_scenario_name), None)
         if selected_scenario:
             required_power_kw = selected_scenario['power']
-            
-            # Revised logic:
-            # 1. Assume a motor efficiency to get the required AC electrical power.
-            # 2. Assume an output AC voltage (proportional to DC link).
-            # 3. Calculate the required RMS current.
+        
             
             motor_efficiency = 0.90 # 90% efficiency
             required_ac_power_watt = required_power_kw * 1000 / motor_efficiency
@@ -198,7 +195,7 @@ with tab3:
             # Simple approximation of AC output voltage from DC link
             # V_out_rms = V_dc * Modulation_Index / sqrt(2)
             # Assuming a good modulation index of 0.85
-            v_out_rms = vdc * 0.85 / math.sqrt(2)
+            v_out_rms = vdc * mod_index / math.sqrt(2)
             
             # Assuming a power factor of 0.9
             pf = 0.9
