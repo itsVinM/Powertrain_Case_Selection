@@ -177,7 +177,7 @@ with tab3:
         e_off = st.number_input("Off-state Energy Loss (E_off) [mJ]", min_value=0.1, max_value=10e3, value=1.0, format="%.2f") * 1e-3
         
         # A dropdown for switching frequency, showing common options
-        f_sw_khz = st.slider("Switching Frequency (f_sw) [kHz]", min_value=0, max_value=100e3, step=100)
+        f_sw_khz = st.selectbox("Switching Frequency (f_sw) [kHz]", [10, 20, 50, 100], index=1)
         f_sw = f_sw_khz * 1000
 
     with col2:
