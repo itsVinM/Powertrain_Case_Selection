@@ -20,7 +20,7 @@ st.markdown("This application displays the torque-speed and power-speed curves f
 
 # ---
 
-tab1, tab2 =st.tabs(["Inputs",'Vehicle performance Graphs', 'Power electronics performances'])
+tab1, tab2, tab3=st.tabs(["Inputs",'Vehicle performance Graphs', 'Power electronics performances'])
 ## User-Defined Inputs
 
 with tab1:
