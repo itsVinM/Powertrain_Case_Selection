@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import math
-import plotly.grph_objs as go
+import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 from motor_graphs_powertrain import EngineGearRatioCalculator, TorqueSpeedGraph, PowerSpeedGraph
 
