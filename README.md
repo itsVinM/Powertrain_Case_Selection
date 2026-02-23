@@ -1,8 +1,12 @@
-# Powertrain Simulation
 
-A Python script that analyzes powertrain configurations for different vehicle conditions (highway, inclined, city) to select the adequate motor.
+Vehicle dynamics analysis tool for electric powertrain design. Built during 
+my mechatronics master's at Politecnico di Torino.
 
-Check it out here : https://itsvinm-powertrain-case-selection-powertrain-sim-1k95tr.streamlit.app/
+Analyzes powertrain configurations for different driving conditions (highway, 
+incline, city) to select appropriate motors and inverters.
+
+**Live demo:** https://itsvinm-powertrain-case-selection-powertrain-sim-1k95tr.streamlit.app/
+
 
 ## Installation
 
