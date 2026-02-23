@@ -1,6 +1,5 @@
 
-Vehicle dynamics analysis tool for electric powertrain design. Built during 
-my mechatronics master's at Politecnico di Torino.
+Vehicle dynamics analysis tool for electric powertrain design. 
 
 Analyzes powertrain configurations for different driving conditions (highway, 
 incline, city) to select appropriate motors and inverters.
